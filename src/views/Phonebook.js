@@ -1,3 +1,8 @@
+import React from 'react';
+import {
+  useFetchContactsQuery,
+  useDeleteContactMutation,
+} from '../redux/contactSlice';
 import { connect } from 'react-redux';
 import Container from '../Components/Container/Container';
 import Section from '../Components/Section/Section';
@@ -6,42 +11,46 @@ import Filter from '../Components/Filter/Filter';
 import ContactList from '../Components/ContactList/ContactList';
 import * as actions from '../redux/actions';
 
-function App({ items, filter, addContact, deleteContact, changeFilter }) {
-  const applyFilter = value => {
-    return items.filter(contact => {
-      return contact.name.toLocaleLowerCase().includes(value);
-    });
-  };
+function ContactsPage({ filter, changeFilter }) {
+  const { data, error, isFetching } = useFetchContactsQuery();
+  const [deleteContact] = useDeleteContactMutation();
+
+  function filtration(value) {
+    if (value === '') {
+      return data;
+    } else {
+      return data.filter(contact => {
+        return contact.name.toLocaleLowerCase().includes(value);
+      });
+    }
+  }
 
   return (
     <Container>
       <Section title="Phonebook">
-        <ContactForm onSubmit={addContact}></ContactForm>
+        <ContactForm contacts={data} />
       </Section>
       <Section title="Contacts">
         <Filter filter={filter} onChangeFilter={changeFilter} />
-        {filter === '' ? (
-          <ContactList contacts={items} deleteContact={deleteContact} />
-        ) : (
+        {isFetching && <h4>Loading...</h4>}
+        {data && (
           <ContactList
-            contacts={applyFilter(filter)}
+            contacts={filtration(filter)}
             deleteContact={deleteContact}
           />
         )}
+        {error && <h4>{error}</h4>}
       </Section>
     </Container>
   );
 }
 
 const mapStateToProps = state => ({
-  items: state.contacts.items,
-  filter: state.contacts.filter,
+  filter: state.filter.filter,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addContact: value => dispatch(actions.addContact(value)),
-  deleteContact: value => dispatch(actions.deleteContact(value)),
   changeFilter: value => dispatch(actions.changeFilter(value.target.value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsPage);

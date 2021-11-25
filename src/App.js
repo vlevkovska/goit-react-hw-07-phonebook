@@ -1,13 +1,12 @@
-import { Routes, Route } from 'react-router-dom';
+// import { Routes, Route } from 'react-router-dom';
+import React from 'react';
 import Container from './Components/Container/Container';
 import Phonebook from './views/Phonebook';
 
 function App() {
   return (
     <Container>
-      <Routes>
-        <Route exact path="/" element={<Phonebook />} />
-      </Routes>
+      <Phonebook />
     </Container>
   );
 }

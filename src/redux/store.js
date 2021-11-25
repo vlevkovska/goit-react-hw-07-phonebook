@@ -1,13 +1,15 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import {
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-import phonebookReducer from './reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import filterReducer from './reducer';
+import { contactsApi } from './contactSlice';
+// import {
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from 'redux-persist';
+// import phonebookReducer from './reducer';
 
 // const myMiddleware = store => next => action => {
 //   console.log('Моя прослойка!', action);
@@ -23,21 +25,25 @@ import phonebookReducer from './reducer';
 //   };
 // }
 
-const middleware = [
-  ...getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
-  // myMiddleware,
-  // logger,
-];
+// const middleware = [
+//   ...getDefaultMiddleware({
+//     serializableCheck: {
+//       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//     },
+//   }),
+//   // myMiddleware,
+//   // logger,
+// ];
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    contacts: phonebookReducer,
+    filter: filterReducer,
+    [contactsApi.reducerPath]: contactsApi.reducer,
   },
-  middleware,
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware(),
+    contactsApi.middleware,
+  ],
   devTools: process.env.NODE_ENV === 'development',
 });
 
