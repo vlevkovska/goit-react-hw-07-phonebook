@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import filterReducer from './reducer';
-import { contactsApi } from './contactSlice';
+import { contactApi } from './contactSlice';
 // import {
 //   FLUSH,
 //   REHYDRATE,
@@ -38,11 +38,11 @@ import { contactsApi } from './contactSlice';
 export const store = configureStore({
   reducer: {
     filter: filterReducer,
-    [contactsApi.reducerPath]: contactsApi.reducer,
+    [contactApi.reducerPath]: contactApi.reducer,
   },
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware(),
-    contactsApi.middleware,
+    contactApi.middleware,
   ],
   devTools: process.env.NODE_ENV === 'development',
 });

@@ -1,23 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ce from './ContactElement.module.css';
+import { useDeleteContactMutation } from '../../redux/contactSlice';
+import Loader from '../Loader/Loader';
 
-const ContactsEl = ({ name, number, id, onDeleteContact }) => (
-  <p className={ce.box}>
-    <span>{name}:</span>
-    <span>{number}</span>
-    <button
-      className={ce.btn}
-      type="button"
-      onClick={() => onDeleteContact(id)}
-    >
-      Remove
-    </button>
-  </p>
-);
+export default function ContactsEl({ id, name, number }) {
+  const [onDeleteContact, { isLoading }] = useDeleteContactMutation();
+
+  return (
+    <p className={ce.box}>
+      <span>{name}</span>
+      <span>{number}</span>
+      <button
+        className={ce.btn}
+        type="button"
+        disabled={isLoading}
+        onClick={() => onDeleteContact(id)}
+      >
+        {isLoading ? <Loader /> : 'Remove'}
+      </button>
+    </p>
+  );
+}
+
 ContactsEl.propTypes = {
-  onDeleteContact: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
 };
-export default ContactsEl;
