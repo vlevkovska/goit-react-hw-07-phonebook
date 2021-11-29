@@ -8,7 +8,7 @@ import {
 } from '../../redux/contactSlice';
 
 const Contacts = () => {
-  const { data: contacts, isFetching, isError } = useFetchContactsQuery();
+  const { data: contacts } = useFetchContactsQuery();
   const [deleteContact] = useDeleteContactMutation();
 
   return (
