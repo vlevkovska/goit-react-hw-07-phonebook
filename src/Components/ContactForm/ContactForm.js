@@ -3,10 +3,12 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import s from './ContactForm.module.css';
+import { useAddNewContactMutation } from '../../redux/contactSlice';
 
 function ContactForm({ onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [addNewContact] = useAddNewContactMutation();
 
   const handleChange = event => {
     const { name, value } = event.currentTarget;
@@ -29,12 +31,12 @@ function ContactForm({ onSubmit }) {
     event.preventDefault();
 
     const contact = {
-      id: uuidv4(),
+      // id: uuidv4(),
       name: name,
       number: number,
     };
 
-    onSubmit(contact);
+    addNewContact(contact);
 
     resetForm();
   };

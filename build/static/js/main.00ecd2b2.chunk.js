@@ -23,11 +23,14 @@
     25: function (e, t, n) {
       e.exports = { title: 'Section_title__17-lM' };
     },
-    27: function (e, t, n) {
-      e.exports = n(41);
+    30: function (e, t, n) {
+      e.exports = { loaderStyle: 'Loader_loaderStyle__ZRvFX' };
     },
-    38: function (e, t, n) {},
-    41: function (e, t, n) {
+    33: function (e, t, n) {
+      e.exports = n(65);
+    },
+    44: function (e, t, n) {},
+    65: function (e, t, n) {
       'use strict';
       n.r(t);
       var a,
@@ -36,11 +39,11 @@
         o = n.n(c),
         l = n(13),
         i = n.n(l),
-        u = n(3),
-        s = n(11),
-        m = n(9),
+        u = n(4),
+        s = n(12),
+        m = n(10),
         b = n(1),
-        d = n(4),
+        d = n(5),
         p = Object(b.b)('contacts/Add'),
         f = Object(b.b)('contacts/Delete'),
         h = Object(b.b)('filter/Change'),
@@ -54,7 +57,7 @@
                 { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
                 { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
               ],
-        C = Object(b.d)(
+        _ = Object(b.d)(
           E,
           ((r = {}),
           Object(m.a)(r, p, function (e, t) {
@@ -83,68 +86,71 @@
           }),
           r),
         ),
-        _ = Object(b.d)(
+        v = Object(b.d)(
           '',
           Object(m.a)({}, h, function (e, t) {
             return t.payload;
           }),
         ),
-        v = Object(d.b)({ items: C, filter: _ }),
+        C = Object(d.b)({ items: _, filter: v }),
         g = n(23),
-        y = n(5),
+        y = n(6),
         O = Object(g.a)({
-          reducerPath: 'contactsApi',
+          reducerPath: 'contactApi',
           baseQuery: Object(y.d)({
             baseUrl: 'https://619965819022ea0017a7ae55.mockapi.io/',
           }),
-          tagTypes: ['Contacts'],
+          tagTypes: ['Contact'],
           endpoints: function (e) {
             return {
               fetchContacts: e.query({
                 query: function () {
-                  return '/Contacts';
+                  return '/contacts';
                 },
-                providesTags: ['Contacts'],
+                providesTags: ['Contact'],
               }),
               deleteContact: e.mutation({
                 query: function (e) {
-                  return { url: '/Contacts/'.concat(e), method: 'DELETE' };
+                  return { url: '/contact/'.concat(e), method: 'DELETE' };
                 },
-                invalidatesTags: ['Contacts'],
+                invalidatesTags: ['Contact'],
               }),
               addNewContact: e.mutation({
-                query: function (e) {
-                  return { url: '/Contacts', method: 'POST', body: e };
+                query: function (e, t) {
+                  return {
+                    url: '/contacts',
+                    method: 'POST',
+                    body: { name: e, number: t },
+                  };
                 },
-                invalidatesTags: ['Contacts'],
+                invalidatesTags: ['Contact'],
               }),
             };
           },
         }),
         j = O.useFetchContactsQuery,
         F = O.useDeleteContactMutation,
-        N =
+        S =
           (O.useAddNewContactMutation,
-          O.useFindContactsQuery,
           Object(b.a)({
-            reducer: Object(m.a)({ filter: v }, O.reducerPath, O.reducer),
+            reducer: Object(m.a)({ filter: C }, O.reducerPath, O.reducer),
             middleware: function (e) {
               return [].concat(Object(s.a)(e()), [O.middleware]);
             },
             devTools: !1,
           })),
-        S = (n(38), n(24)),
-        w = n.n(S);
+        N = (n(44), n(24)),
+        w = n.n(N);
       var x = function (e) {
           var t = e.children;
           return o.a.createElement('div', { className: w.a.container }, t);
         },
-        A = n(12),
-        T = n(7),
+        A = n(8),
+        T = n(3),
         k = n.n(T),
         q = n(25),
         z = n.n(q);
-      function D(e) {
+      function L(e) {
         var t = e.title,
           n = e.children;
         return o.a.createElement(
@@ -154,12 +160,12 @@
           n,
         );
       }
-      D.protoType = { title: k.a.string };
-      var Z = D,
-        J = n(26),
-        L = n(8),
-        M = n.n(L);
-      function I(e) {
+      L.protoType = { title: k.a.string };
+      var Z = L,
+        D = n(26),
+        J = n(9),
+        M = n.n(J);
+      function B(e) {
         var t = e.onSubmit,
           n = Object(c.useState)(''),
           a = Object(A.a)(n, 2),
@@ -193,7 +199,7 @@
             className: M.a.form,
             onSubmit: function (e) {
               e.preventDefault();
-              var n = { id: Object(J.v4)(), name: r, number: s };
+              var n = { id: Object(D.v4)(), name: r, number: s };
               t(n), d();
             },
           },
@@ -238,19 +244,19 @@
           ),
         );
       }
-      I.protoType = { onSubmit: k.a.func };
-      var P = I,
-        B = n(16),
-        Q = n.n(B),
-        R = function (e) {
+      B.protoType = { onSubmit: k.a.func };
+      var I = B,
+        P = n(16),
+        R = n.n(P),
+        Q = function (e) {
           var t = e.filter,
             n = e.onChangeFilter;
           return o.a.createElement(
             'label',
-            { className: Q.a.label },
+            { className: R.a.label },
             'Find contacts by name',
             o.a.createElement('input', {
-              className: Q.a.input,
+              className: R.a.input,
               type: 'text',
               name: 'filter',
               pattern:
@@ -263,63 +269,100 @@
             }),
           );
         };
-      R.protoType = {
+      Q.protoType = {
         filter: k.a.string.isRequired,
         onChangeFilter: k.a.func.isRequired,
       };
-      var U = R,
+      var U = Q,
         Y = n(17),
         $ = n.n(Y),
         H = n(18),
         K = n.n(H),
-        G = function (e) {
-          var t = e.name,
-            n = e.number,
-            a = e.id,
-            r = e.onDeleteContact;
-          return o.a.createElement(
-            'p',
-            { className: K.a.box },
-            o.a.createElement('span', null, t, ':'),
-            o.a.createElement('span', null, n),
-            o.a.createElement(
-              'button',
+        X = n(27),
+        G = n(28),
+        V = n(32),
+        W = n(31),
+        ee = n(29),
+        te = n.n(ee),
+        ne = n(30),
+        ae = n.n(ne),
+        re = (function (e) {
+          Object(V.a)(n, e);
+          var t = Object(W.a)(n);
+          function n() {
+            return Object(X.a)(this, n), t.apply(this, arguments);
+          }
+          return (
+            Object(G.a)(n, [
               {
-                className: K.a.btn,
-                type: 'button',
-                onClick: function () {
-                  return r(a);
+                key: 'render',
+                value: function () {
+                  return o.a.createElement(
+                    'div',
+                    { className: ae.a.loaderStyle },
+                    o.a.createElement(te.a, {
+                      type: 'ThreeDots',
+                      color: '#00BFFF',
+                      height: 18,
+                      width: 50,
+                      timeout: 2e3,
+                    }),
+                  );
                 },
               },
-              'Remove',
-            ),
+            ]),
+            n
           );
-        },
-        V = function (e) {
-          var t = e.contacts,
-            n = e.deleteContact;
-          return o.a.createElement(
-            'ul',
-            { className: $.a.list },
-            t.map(function (e) {
-              var t = e.id,
-                a = e.name,
-                r = e.number;
-              return o.a.createElement(
-                'li',
-                { key: t, className: $.a.item },
-                o.a.createElement(G, {
-                  name: a,
-                  number: r,
-                  onDeleteContact: function () {
-                    return n(t);
-                  },
-                }),
-              );
-            }),
-          );
-        };
-      var W = Object(u.c)(
+        })(c.Component);
+      function ce(e) {
+        var t = e.id,
+          n = e.name,
+          a = e.number,
+          r = F(),
+          c = Object(A.a)(r, 2),
+          l = c[0],
+          i = c[1].isLoading;
+        return o.a.createElement(
+          'p',
+          { className: K.a.box },
+          o.a.createElement('span', null, n),
+          o.a.createElement('span', null, a),
+          o.a.createElement(
+            'button',
+            {
+              className: K.a.btn,
+              type: 'button',
+              disabled: i,
+              onClick: function () {
+                return l(t);
+              },
+            },
+            i ? o.a.createElement(re, null) : 'Remove',
+          ),
+        );
+      }
+      var oe = function (e) {
+        var t = e.contacts,
+          n = e.deleteContact;
+        return o.a.createElement(
+          'ul',
+          { className: $.a.list },
+          t.map(function (e) {
+            return o.a.createElement(
+              'li',
+              { key: e.id, className: $.a.item },
+              o.a.createElement(ce, {
+                name: e.name,
+                number: e.number,
+                onDeleteContact: function () {
+                  return n(e.id);
+                },
+              }),
+            );
+          }),
+        );
+      };
+      var le = Object(u.c)(
         function (e) {
           return { filter: e.filter.filter };
         },
@@ -346,7 +389,7 @@
           o.a.createElement(
             Z,
             { title: 'Phonebook' },
-            o.a.createElement(P, { contacts: c }),
+            o.a.createElement(I, { contacts: c }),
           ),
           o.a.createElement(
             Z,
@@ -354,7 +397,7 @@
             o.a.createElement(U, { filter: n, onChangeFilter: a }),
             i && o.a.createElement('h4', null, 'Loading...'),
             c &&
-              o.a.createElement(V, {
+              o.a.createElement(oe, {
                 contacts:
                   ((t = n),
                   '' === t
@@ -368,21 +411,21 @@
           ),
         );
       });
-      var X = function () {
-        return o.a.createElement(x, null, o.a.createElement(W, null));
+      var ie = function () {
+        return o.a.createElement(x, null, o.a.createElement(le, null));
       };
-      console.log(N),
-        console.log(N.getState()),
+      console.log(S),
+        console.log(S.getState()),
         i.a.render(
           o.a.createElement(
             o.a.StrictMode,
             null,
-            o.a.createElement(u.a, { store: N }, o.a.createElement(X, null)),
+            o.a.createElement(u.a, { store: S }, o.a.createElement(ie, null)),
           ),
           document.getElementById('root'),
         );
     },
-    8: function (e, t, n) {
+    9: function (e, t, n) {
       e.exports = {
         form: 'ContactForm_form__2Ufa0',
         label: 'ContactForm_label__3pgfB',
@@ -393,6 +436,6 @@
       };
     },
   },
-  [[27, 1, 2]],
+  [[33, 1, 2]],
 ]);
-//# sourceMappingURL=main.ec921c08.chunk.js.map
+//# sourceMappingURL=main.00ecd2b2.chunk.js.map

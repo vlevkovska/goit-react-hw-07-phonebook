@@ -2,14 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import c from './ContactList.module.css';
 import ContactsEl from '../ContactElement/ContactElement';
+import {
+  useFetchContactsQuery,
+  useDeleteContactMutation,
+} from '../../redux/contactSlice';
 
-const Contacts = ({ contacts, deleteContact }) => {
+const Contacts = () => {
+  const { data: contacts, isFetching, isError } = useFetchContactsQuery();
+  const [deleteContact] = useDeleteContactMutation();
+
   return (
     <ul className={c.list}>
       {contacts.map(contact => {
         return (
           <li key={contact.id} className={c.item}>
             <ContactsEl
+              id={contact.id}
               name={contact.name}
               number={contact.number}
               onDeleteContact={() => deleteContact(contact.id)}
